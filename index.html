@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Buku Tamu</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    
+    body { 
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: linear-gradient(135deg, #1e1e1e 0%, #2d3748 50%, #4a5568 100%);
+      min-height: 100vh;
+      color: #e2e8f0;
+      padding: 20px;
+    }
+    
+    .container {
+      max-width: 600px;
+      margin: 0 auto;
+      background: rgba(45, 55, 72, 0.9);
+      backdrop-filter: blur(10px);
+      border-radius: 20px;
+      padding: 40px;
+      box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 255, 255, 0.1);
+    }
+    
+    h2 {
+      color: #f7fafc;
+      margin-bottom: 30px;
+      font-size: 2.5rem;
+      font-weight: 700;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
+      background: linear-gradient(45deg, #63b3ed, #90cdf4);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      text-align: center;
+    }
+    
+    .form-group {
+      margin-bottom: 20px;
+      text-align: left;
+    }
+    
+    label {
+      display: block;
+      margin-bottom: 8px;
+      color: #cbd5e0;
+      font-weight: 500;
+      font-size: 0.9rem;
+    }
+    
+    input, textarea {
+      width: 100%;
+      padding: 12px 16px;
+      background: rgba(26, 32, 44, 0.8);
+      border: 2px solid rgba(74, 85, 104, 0.6);
+      border-radius: 12px;
+      color: #e2e8f0;
+      font-size: 1rem;
+      transition: all 0.3s ease;
+      backdrop-filter: blur(5px);
+    }
+    
+    input:focus, textarea:focus {
+      outline: none;
+      border-color: #63b3ed;
+      box-shadow: 0 0 0 3px rgba(99, 179, 237, 0.3);
+      background: rgba(26, 32, 44, 0.9);
+    }
+    
+    input::placeholder, textarea::placeholder {
+      color: #718096;
+    }
+    
+    textarea {
+      min-height: 100px;
+      resize: vertical;
+    }
+    
+    .btn-primary { 
+      width: 100%;
+      padding: 14px 20px;
+      background: linear-gradient(45deg, #4299e1, #63b3ed);
+      color: white;
+      border: none;
+      border-radius: 12px;
+      font-size: 1.1rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(66, 153, 225, 0.4);
+      margin-top: 10px;
+    }
+    
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 8px 25px rgba(66, 153, 225, 0.6);
+      background: linear-gradient(45deg, #3182ce, #4299e1);
+    }
+    
+    .btn-primary:active {
+      transform: translateY(0);
+    }
+    
+    h3 {
+      color: #f7fafc;
+      margin: 40px 0 20px 0;
+      font-size: 1.8rem;
+      font-weight: 600;
+      text-align: center;
+      border-bottom: 2px solid rgba(99, 179, 237, 0.3);
+      padding-bottom: 10px;
+    }
+    
+    .tamu {
+      background: linear-gradient(135deg, rgba(26, 32, 44, 0.9), rgba(45, 55, 72, 0.8));
+      border: 1px solid rgba(99, 179, 237, 0.3);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 15px 0;
+      backdrop-filter: blur(10px);
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .tamu::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 3px;
+      background: linear-gradient(45deg, #4299e1, #63b3ed);
+    }
+    
+    .tamu:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 12px 40px rgba(0, 0, 0, 0.4);
+      border-color: rgba(99, 179, 237, 0.5);
+    }
+    
+    .tamu strong {
+      color: #90cdf4;
+      display: inline-block;
+      width: 100px;
+      font-weight: 600;
+    }
+    
+    .tamu-content {
+      line-height: 1.6;
+      margin-bottom: 15px;
+    }
+    
+    .tamu-content > div {
+      margin-bottom: 8px;
+      padding: 4px 0;
+    }
+    
+    .btn-delete {
+      background: linear-gradient(45deg, #e53e3e, #fc8181);
+      color: white;
+      border: none;
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 0.9rem;
+      font-weight: 500;
+      transition: all 0.3s ease;
+      box-shadow: 0 4px 15px rgba(229, 62, 62, 0.3);
+    }
+    
+    .btn-delete:hover {
+      background: linear-gradient(45deg, #c53030, #e53e3e);
+      transform: translateY(-1px);
+      box-shadow: 0 6px 20px rgba(229, 62, 62, 0.4);
+    }
+    
+    .empty-state {
+      text-align: center;
+      color: #718096;
+      font-style: italic;
+      padding: 40px;
+      background: rgba(26, 32, 44, 0.5);
+      border-radius: 12px;
+      margin-top: 20px;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes fadeOut {
+      from { opacity: 1; transform: translateY(0); }
+      to { opacity: 0; transform: translateY(-20px); }
+    }
+    
+    .tamu {
+      animation: fadeIn 0.5s ease-out;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h2>📖 Buku Tamu</h2>
+    
+    <div class="form-group">
+      <label for="nama">Nama Lengkap</label>
+      <input type="text" id="nama" placeholder="Masukkan nama lengkap Anda">
+    </div>
+    
+    <div class="form-group">
+      <label for="alamat">Alamat</label>
+      <input type="text" id="alamat" placeholder="Masukkan alamat lengkap">
+    </div>
+    
+    <div class="form-group">
+      <label for="nomor">Nomor HP</label>
+      <input type="text" id="nomor" placeholder="Contoh: 08123456789">
+    </div>
+    
+    <div class="form-group">
+      <label for="pesan">Keperluan / Pesan</label>
+      <textarea id="pesan" placeholder="Tuliskan keperluan atau pesan Anda"></textarea>
+    </div>
+    
+    <button class="btn-primary" onclick="tambahTamu()">✨ Tambah ke Buku Tamu</button>
+    
+    <h3>📋 Daftar Tamu</h3>
+    <div id="daftarTamu"></div>
+  </div>
+
+  <script>
+    function tambahTamu() {
+      const nama = document.getElementById("nama").value.trim();
+      const alamat = document.getElementById("alamat").value.trim();
+      const nomor = document.getElementById("nomor").value.trim();
+      const pesan = document.getElementById("pesan").value.trim();
+
+      if (!nama || !alamat || !nomor || !pesan) {
+        alert("⚠️ Harap isi semua data terlebih dahulu!");
+        return;
+      }
+
+      // Hapus pesan empty state jika ada
+      const emptyState = document.querySelector('.empty-state');
+      if (emptyState) {
+        emptyState.remove();
+      }
+
+      const div = document.createElement("div");
+      div.className = "tamu";
+      
+      const currentDate = new Date().toLocaleDateString('id-ID', {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+        hour: '2-digit',
+        minute: '2-digit'
+      });
+      
+      div.innerHTML = `
+        <div class="tamu-content">
+          <div><strong>👤 Nama:</strong> ${nama}</div>
+          <div><strong>🏠 Alamat:</strong> ${alamat}</div>
+          <div><strong>📱 No. HP:</strong> ${nomor}</div>
+          <div><strong>💬 Pesan:</strong> ${pesan}</div>
+          <div><strong>📅 Waktu:</strong> ${currentDate}</div>
+        </div>
+        <button class="btn-delete" onclick="hapusTamu(this)">🗑️ Hapus</button>
+      `;
+      
+      document.getElementById("daftarTamu").prepend(div);
+      
+      // Reset form dengan animasi
+      ["nama", "alamat", "nomor", "pesan"].forEach(id => {
+        document.getElementById(id).value = "";
+      });
+      
+      // Fokus kembali ke input nama
+      document.getElementById("nama").focus();
+    }
+    
+    function hapusTamu(button) {
+      if (confirm("🤔 Apakah Anda yakin ingin menghapus data tamu ini?")) {
+        const tamuElement = button.parentElement;
+        tamuElement.style.animation = "fadeOut 0.3s ease-out";
+        setTimeout(() => {
+          tamuElement.remove();
+          
+          // Tampilkan pesan empty state jika tidak ada tamu
+          const daftarTamu = document.getElementById("daftarTamu");
+          if (daftarTamu.children.length === 0) {
+            showEmptyState();
+          }
+        }, 300);
+      }
+    }
+    
+    function showEmptyState() {
+      const daftarTamu = document.getElementById("daftarTamu");
+      const emptyDiv = document.createElement("div");
+      emptyDiv.className = "empty-state";
+      emptyDiv.innerHTML = "📝 Belum ada tamu yang terdaftar.<br>Silakan tambahkan data tamu baru.";
+      daftarTamu.appendChild(emptyDiv);
+    }
+    
+    // Tampilkan empty state saat halaman dimuat
+    document.addEventListener('DOMContentLoaded', function() {
+      showEmptyState();
+    });
+  </script>
+</body>
+</html>
